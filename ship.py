@@ -27,7 +27,7 @@ class Ship():
             # self.rect.centerx-=1.5
             self.center-=self.ai_settings.ship_speed_factor
         self.rect.centerx = self.center
-        print("rect.centerx"+str(self.center)+str(self.rect.centerx))
+        # print("rect.centerx"+str(self.center)+str(self.rect.centerx))
 
 
     def blitme(self):
