@@ -5,6 +5,7 @@ from ship import Ship
 import game_functions as gf
 from pygame.sprite import Group
 from alien import Alien
+from game_stats import GameStats
 def run_game():
     pygame.init()
     ai_settings=Settings()
@@ -13,7 +14,7 @@ def run_game():
     ship = Ship(ai_settings,screen)
     bullets=Group()
     aliens=Group()
-    gf.create_fleet(ai_settings,screen,aliens)
+    gf.create_fleet(ai_settings,screen,ship,aliens)
     f = pygame.font.Font('C:/Windows/Fonts/simkai.ttf', 100)
     text = f.render("FUCK YOU", False, (100, 5, 255), (230, 230, 230))
     print(text)
@@ -21,6 +22,7 @@ def run_game():
     textRect.center = (200, 200)
 
     alien=Alien(ai_settings,screen)
+    stats=GameStats(ai_settings)
 
     # pygame.display.set_gamma(230,230,230)
 
@@ -31,7 +33,9 @@ def run_game():
         gf.check_events(ai_settings,screen,ship,bullets)
         ship.update()
 
-        gf.update_bullets(bullets)
+        # gf.update_bullets(bullets)
+        gf.update_aliens(ai_settings,stats,screen,ship,aliens,bullets)
+        gf.update_bullet(ai_settings,screen,ship,aliens,bullets)
         gf.update_screen(ai_settings,screen,ship,aliens,bullets,text, textRect)
         # screen.blit(text, textRect)
 run_game()
