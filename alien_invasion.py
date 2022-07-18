@@ -6,6 +6,8 @@ import game_functions as gf
 from pygame.sprite import Group
 from alien import Alien
 from game_stats import GameStats
+from button import Button
+from scrore import Scoreboard
 def run_game():
     pygame.init()
     ai_settings=Settings()
@@ -23,6 +25,9 @@ def run_game():
 
     alien=Alien(ai_settings,screen)
     stats=GameStats(ai_settings)
+    play_button=Button(screen,'PLAY')
+
+    sb=Scoreboard(ai_settings,screen,stats)
 
     # pygame.display.set_gamma(230,230,230)
 
@@ -30,12 +35,13 @@ def run_game():
 
         #对函数调用
 
-        gf.check_events(ai_settings,screen,ship,bullets)
-        ship.update()
+        gf.check_events(ai_settings, screen,aliens, stats,play_button,ship, bullets)
+        if stats.game_active:
+            ship.update()
 
-        # gf.update_bullets(bullets)
-        gf.update_aliens(ai_settings,stats,screen,ship,aliens,bullets)
-        gf.update_bullet(ai_settings,screen,ship,aliens,bullets)
-        gf.update_screen(ai_settings,screen,ship,aliens,bullets,text, textRect)
+            # gf.update_bullets(bullets)
+            gf.update_aliens(ai_settings,stats,screen,ship,aliens,bullets)
+            gf.update_bullet(ai_settings,stats,screen,ship,aliens,bullets,sb)
+        gf.update_screen(ai_settings,screen,stats,ship,aliens,bullets,text,textRect,play_button,sb)
         # screen.blit(text, textRect)
 run_game()
